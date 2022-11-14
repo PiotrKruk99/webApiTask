@@ -7,11 +7,13 @@ namespace webApi.Services;
 public class WritersService
 {
     private DataContext dataContext;
+    private BooksService _booksService;
     private Mapper mapper;
 
-    public WritersService()
+    public WritersService(BooksService booksService)
     {
         dataContext = new DataContext();
+        _booksService = booksService;
 
         var config = new MapperConfiguration(cfg =>
                     cfg.CreateMap<WriterCl, Writer>()
@@ -55,7 +57,9 @@ public class WritersService
             return false;
         }
 
-        return true;
+        var result = await _booksService.DeleteBooksByWriter(id);
+
+        return result;
     }
 
     public async Task<Writer?> GetWriters(int id)
@@ -63,6 +67,12 @@ public class WritersService
         var writer = await dataContext.FindAsync<Writer>(id);
 
         return writer;
+    }
+
+    public Writer[] GetWriters()
+    {
+        Writer[] writers = dataContext.Writers.ToArray();
+        return writers;
     }
 
     public Writer[] GetWriters(string name)

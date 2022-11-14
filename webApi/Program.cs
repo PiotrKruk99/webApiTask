@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<WritersService>();
+builder.Services.AddTransient<BooksService>();
 
 var app = builder.Build();
 

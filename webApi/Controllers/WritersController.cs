@@ -44,6 +44,13 @@ public class WritersController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet]
+    public IActionResult GetWriters()
+    {
+        Writer[] result = _service.GetWriters();
+        return Ok(result);
+    }
+
     [HttpPost]
     public async Task<IActionResult> UpdateWriter(Writer writer)
     {
