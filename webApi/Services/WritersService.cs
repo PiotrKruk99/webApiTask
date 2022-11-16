@@ -21,9 +21,17 @@ public class WritersService
         mapper = new Mapper(config);
     }
 
+    private bool IsFullNameExists(string name)
+    {
+        return dataContext.Writers.ToList().Exists(w => w.FullName.ToUpper().Equals(name.ToUpper()));
+    }
+
     public async Task<bool> AddWriter(WriterCl writerCl)
     {
         Writer writer = mapper.Map<Writer>(writerCl);
+
+        if (IsFullNameExists(writer.FullName))
+            return false;
 
         dataContext.Writers.Add(writer);
 

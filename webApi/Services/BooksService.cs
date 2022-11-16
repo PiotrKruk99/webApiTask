@@ -19,9 +19,17 @@ public class BooksService
         mapper = new Mapper(config);
     }
 
+    private bool IsTitleExists(string title)
+    {
+        return dataContext.Books.ToList().Exists(b => b.Title.ToUpper().Equals(title.ToUpper()));
+    }
+
     public async Task<bool> AddBook(BookCl bookCl)
     {
         Book book = mapper.Map<Book>(bookCl);
+
+        if (IsTitleExists(book.Title))
+            return false;
 
         dataContext.Books.Add(book);
 
@@ -67,6 +75,8 @@ public class BooksService
     public async Task<bool> DeleteBooksByWriter(int id)
     {
         IEnumerable<Book> books = dataContext.Books.ToList().Where(x => x.WriterId == id);
+        // var query = dataContext.Books.Join(dataContext.Writers, b => b.WriterId, w => w.WriterId, (b, w)
+        //         => new { WriterName = w.FullName, BookTitle = b.Title });
 
         foreach (var book in books)
         {

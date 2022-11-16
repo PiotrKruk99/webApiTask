@@ -1,4 +1,5 @@
 using webApi.Services;
+using webApi.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<WritersService>();
 builder.Services.AddTransient<BooksService>();
+builder.Services.AddSingleton<WriterValidator>();
 
 var app = builder.Build();
 

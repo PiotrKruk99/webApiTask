@@ -29,4 +29,18 @@ public class BooksController : ControllerBase
         Book[] result = _service.GetBooks();
         return Ok(result);
     }
+
+    [HttpGet("{id:int:min(1)}")]
+    public async Task<IActionResult> DeleteBook(int id)
+    {
+        var result = await _service.DeleteBook(id);
+        return Ok(result);
+    }
+
+    [HttpGet("{id:int:min(1)}")]
+    public async Task<IActionResult> DeleteBookByWriter(int id)
+    {
+        var result = await _service.DeleteBooksByWriter(id);
+        return Ok(result);
+    }
 }
