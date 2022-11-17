@@ -51,7 +51,7 @@ public class WritersService
     {
         var writer = dataContext.Writers.Find(id);
 
-        if (writer == null)
+        if (writer is null)
             return false;
 
         try

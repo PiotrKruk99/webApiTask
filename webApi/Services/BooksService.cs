@@ -31,6 +31,10 @@ public class BooksService
         if (IsTitleExists(book.Title))
             return false;
 
+        var writer = dataContext.Writers.FirstOrDefault(w => w.WriterId == book.WriterId);
+        if (writer is null)
+            return false;
+
         dataContext.Books.Add(book);
 
         try
@@ -85,6 +89,22 @@ public class BooksService
 
         try
         {
+            await dataContext.SaveChangesAsync();
+        }
+        catch (Exception exc)
+        {
+            Console.WriteLine(exc.ToString());
+            return false;
+        }
+
+        return true;
+    }
+
+    public async Task<bool> UpdateBook(Book book)
+    {
+        try
+        {
+            dataContext.Books.Update(book);
             await dataContext.SaveChangesAsync();
         }
         catch (Exception exc)
