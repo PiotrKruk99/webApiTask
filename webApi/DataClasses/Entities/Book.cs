@@ -1,6 +1,6 @@
 namespace webApi.DataClasses.Entities;
 
-public class Book
+public class Book : IBook
 {
     public int BookId { get; set; }
     public int WriterId { get; set; }

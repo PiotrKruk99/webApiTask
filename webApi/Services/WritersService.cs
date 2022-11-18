@@ -4,15 +4,15 @@ using AutoMapper;
 
 namespace webApi.Services;
 
-public class WritersService
+public class WritersService : IWritersService
 {
     private DataContext dataContext;
-    private BooksService _booksService;
+    private IBooksService _booksService;
     private Mapper mapper;
 
-    public WritersService(BooksService booksService)
+    public WritersService(IBooksService booksService, DataContext context)
     {
-        dataContext = new DataContext();
+        dataContext = context;
         _booksService = booksService;
 
         var config = new MapperConfiguration(cfg =>
@@ -21,9 +21,17 @@ public class WritersService
         mapper = new Mapper(config);
     }
 
+    private bool IsFullNameExists(string name)
+    {
+        return dataContext.Writers.ToList().Exists(w => w.FullName.ToUpper().Equals(name.ToUpper()));
+    }
+
     public async Task<bool> AddWriter(WriterCl writerCl)
     {
         Writer writer = mapper.Map<Writer>(writerCl);
+
+        if (IsFullNameExists(writer.FullName))
+            return false;
 
         dataContext.Writers.Add(writer);
 
@@ -43,7 +51,7 @@ public class WritersService
     {
         var writer = dataContext.Writers.Find(id);
 
-        if (writer == null)
+        if (writer is null)
             return false;
 
         try

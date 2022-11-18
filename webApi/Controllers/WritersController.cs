@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using webApi.Services;
 using webApi.DataClasses.Entities;
+using webApi.DataClasses.Validators;
+using FluentValidation.Results;
+using FluentValidation;
 
 namespace webApi.Controllers;
 
@@ -8,19 +11,30 @@ namespace webApi.Controllers;
 [Route("[controller]/[action]")]
 public class WritersController : ControllerBase
 {
-    private WritersService _service;
+    private IWritersService _service;
+    private IValidator<WriterCl> _clValidator;
+    private IValidator<Writer> _validator;
 
-    public WritersController(WritersService service)
+    public WritersController(IWritersService service, IValidator<WriterCl> clValidator, IValidator<Writer> validator)
     {
         _service = service;
+        _clValidator = clValidator;
+        _validator = validator;
     }
 
     [HttpPost]
     public async Task<IActionResult> AddWriter(WriterCl writerCl)
     {
-        var result = await _service.AddWriter(writerCl);
-
-        return Ok(result);
+        ValidationResult validResult = _clValidator.Validate(writerCl);
+        if (validResult.IsValid)
+        {
+            var result = await _service.AddWriter(writerCl);
+            return Ok(result);
+        }
+        else
+        {
+            return BadRequest(validResult.ToString(" | "));
+        }
     }
 
     [HttpGet("{id:int:min(1)}")]
@@ -54,7 +68,15 @@ public class WritersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> UpdateWriter(Writer writer)
     {
-        bool result = await _service.UpdateWriter(writer);
-        return Ok(result);
+        ValidationResult validResult = _validator.Validate(writer);
+        if (validResult.IsValid)
+        {
+            bool result = await _service.UpdateWriter(writer);
+            return Ok(result);
+        }
+        else
+        {
+            return BadRequest(validResult.ToString(" | "));
+        }
     }
 }

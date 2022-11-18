@@ -10,7 +10,7 @@ public class DataContext : DbContext
 
     public string DbPath { get; }
 
-    public DataContext()
+    public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
         DbPath = @"Data/base.db";
 
