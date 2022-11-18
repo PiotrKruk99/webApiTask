@@ -9,9 +9,9 @@ public class BooksService : IBooksService
     private DataContext dataContext;
     private Mapper mapper;
 
-    public BooksService()
+    public BooksService(DataContext context)
     {
-        dataContext = new DataContext();
+        dataContext = context;
 
         var config = new MapperConfiguration(cfg =>
                     cfg.CreateMap<BookCl, Book>()

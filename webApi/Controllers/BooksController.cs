@@ -3,6 +3,7 @@ using webApi.Services;
 using webApi.DataClasses.Entities;
 using webApi.DataClasses.Validators;
 using FluentValidation.Results;
+using FluentValidation;
 
 namespace webApi.Controllers;
 
@@ -10,11 +11,11 @@ namespace webApi.Controllers;
 [Route("[controller]/[action]")]
 public class BooksController : ControllerBase
 {
-    private BooksService _service;
-    private BookClValidator _clValidator;
-    private BookValidator _validator;
+    private IBooksService _service;
+    private IValidator<BookCl> _clValidator;
+    private IValidator<Book> _validator;
 
-    public BooksController(BooksService service, BookClValidator clValidator, BookValidator validator)
+    public BooksController(IBooksService service, IValidator<BookCl> clValidator, IValidator<Book> validator)
     {
         _service = service;
         _clValidator = clValidator;

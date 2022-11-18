@@ -1,7 +1,9 @@
 using webApi.Services;
+using webApi.DataClasses;
 using webApi.DataClasses.Validators;
 using webApi.DataClasses.Entities;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<DataContext>(options
+                    => options.UseSqlite());
 builder.Services.AddTransient<IWritersService, WritersService>();
 builder.Services.AddTransient<IBooksService, BooksService>();
 builder.Services.AddSingleton<IValidator<WriterCl>, WriterClValidator>();

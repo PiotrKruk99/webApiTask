@@ -10,9 +10,9 @@ public class WritersService : IWritersService
     private IBooksService _booksService;
     private Mapper mapper;
 
-    public WritersService(IBooksService booksService)
+    public WritersService(IBooksService booksService, DataContext context)
     {
-        dataContext = new DataContext();
+        dataContext = context;
         _booksService = booksService;
 
         var config = new MapperConfiguration(cfg =>
