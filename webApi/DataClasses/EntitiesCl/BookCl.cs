@@ -1,6 +1,6 @@
 namespace webApi.DataClasses.Entities;
 
-public class BookCl
+public class BookCl : IBookCl
 {
     public int? WriterId { get; set; }
     public string? Title { get; set; }

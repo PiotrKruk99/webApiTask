@@ -1,6 +1,6 @@
 namespace webApi.DataClasses.Entities;
 
-public class Writer
+public class Writer : IWriter
 {
     public int WriterId { get; set; }
     public string FullName { get; set; }

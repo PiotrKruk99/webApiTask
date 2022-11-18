@@ -4,13 +4,13 @@ using AutoMapper;
 
 namespace webApi.Services;
 
-public class WritersService
+public class WritersService : IWritersService
 {
     private DataContext dataContext;
-    private BooksService _booksService;
+    private IBooksService _booksService;
     private Mapper mapper;
 
-    public WritersService(BooksService booksService)
+    public WritersService(IBooksService booksService)
     {
         dataContext = new DataContext();
         _booksService = booksService;

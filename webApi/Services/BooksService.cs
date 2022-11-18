@@ -4,7 +4,7 @@ using AutoMapper;
 
 namespace webApi.Services;
 
-public class BooksService
+public class BooksService : IBooksService
 {
     private DataContext dataContext;
     private Mapper mapper;

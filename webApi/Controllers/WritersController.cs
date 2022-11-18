@@ -3,6 +3,7 @@ using webApi.Services;
 using webApi.DataClasses.Entities;
 using webApi.DataClasses.Validators;
 using FluentValidation.Results;
+using FluentValidation;
 
 namespace webApi.Controllers;
 
@@ -10,11 +11,11 @@ namespace webApi.Controllers;
 [Route("[controller]/[action]")]
 public class WritersController : ControllerBase
 {
-    private WritersService _service;
-    private WriterClValidator _clValidator;
-    private WriterValidator _validator;
+    private IWritersService _service;
+    private IValidator<WriterCl> _clValidator;
+    private IValidator<Writer> _validator;
 
-    public WritersController(WritersService service, WriterClValidator clValidator, WriterValidator validator)
+    public WritersController(IWritersService service, IValidator<WriterCl> clValidator, IValidator<Writer> validator)
     {
         _service = service;
         _clValidator = clValidator;

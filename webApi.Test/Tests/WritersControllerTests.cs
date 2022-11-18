@@ -1,29 +1,30 @@
 using System;
+using System.Collections.Generic;
 using Xunit;
 using FluentAssertions;
 using Moq;
 using webApi.Services;
-using webApi.DataClasses.Validators;
 using webApi.DataClasses.Entities;
 using webApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace webApi.Test;
 
 public class WritersControllerTests
 {
     private WritersController controller;
-    private Mock<BooksService> booksService;
-    private Mock<WritersService> writersService;
-    private Mock<WriterClValidator> clValidator;
-    private Mock<WriterValidator> validator;
+    //private Mock<IBooksService> booksService;
+    private Mock<IWritersService> writersService;
+    private Mock<IValidator<WriterCl>> clValidator;
+    private Mock<IValidator<Writer>> validator;
 
     public WritersControllerTests()
     {
-        booksService = new Mock<BooksService>();
-        writersService = new Mock<WritersService>(booksService.Object);
-        clValidator = new Mock<WriterClValidator>();
-        validator = new Mock<WriterValidator>();
+        writersService = new Mock<IWritersService>();
+        clValidator = new Mock<IValidator<WriterCl>>();
+        validator = new Mock<IValidator<Writer>>();
         controller = new WritersController(writersService.Object, clValidator.Object, validator.Object);
     }
 
@@ -37,8 +38,14 @@ public class WritersControllerTests
             DateOfBirth = new DateTime(1975, 11, 11)
         };
 
-        writersService.Setup(x => x.AddWriter(It.IsAny<WriterCl>()))
-                .ReturnsAsync(true);
+        writersService.Setup(x => x.AddWriter(It.IsAny<WriterCl>())).ReturnsAsync(true);
+
+        clValidator.Setup(x => x.Validate(It.IsAny<WriterCl>()))
+                    .Returns(new ValidationResult()
+                    {
+                        Errors = new List<ValidationFailure>()
+                    });
+
 
         var actionResult = await controller.AddWriter(writer);
 
