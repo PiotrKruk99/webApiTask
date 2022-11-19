@@ -29,7 +29,7 @@ public class WritersControllerTests
     }
 
     [Fact]
-    public async void AddWriter_ShouldReturnOkResult()
+    public async void AddWriter_Should_Return_OkObjectResult()
     {
         WriterCl writer = new WriterCl()
         {

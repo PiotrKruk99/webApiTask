@@ -19,5 +19,8 @@ public class DataContext : DbContext
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source={DbPath}");
+    {
+        if (!options.IsConfigured)
+            options.UseSqlite($"Data Source={DbPath}");
+    }
 }

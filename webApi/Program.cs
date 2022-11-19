@@ -13,8 +13,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(options
-                    => options.UseSqlite());
+builder.Services.AddDbContext<DataContext>();
 builder.Services.AddTransient<IWritersService, WritersService>();
 builder.Services.AddTransient<IBooksService, BooksService>();
 builder.Services.AddSingleton<IValidator<WriterCl>, WriterClValidator>();

@@ -17,7 +17,7 @@ public class WriterClValidatorTests
     }
 
     [Fact]
-    public void Validate_ShouldReturnNoErrors()
+    public void Validate_Should_Return_No_Errors()
     {
         WriterCl writer = new WriterCl()
         {
@@ -32,7 +32,7 @@ public class WriterClValidatorTests
     }
 
     [Fact]
-    public void Validate_ShouldReturnErrors()
+    public void Validate_Should_Return_Errors()
     {
         WriterCl writer = new WriterCl()
         {
