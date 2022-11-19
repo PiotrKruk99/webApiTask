@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
 using webApi.DataClasses.Entities;
 
 namespace webApi.DataClasses;
@@ -12,9 +13,11 @@ public class DataContext : DbContext
 
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
+        var optionsForTests = options.FindExtension<InMemoryOptionsExtension>();
+
         DbPath = @"Data/base.db";
 
-        if (!Directory.Exists(Path.GetDirectoryName(DbPath)))
+        if ((optionsForTests is null) && !Directory.Exists(Path.GetDirectoryName(DbPath)))
             throw new Exception("'Data' folder for database file not exists.");
     }
 
