@@ -82,6 +82,9 @@ public class BooksService : IBooksService
         // var query = dataContext.Books.Join(dataContext.Writers, b => b.WriterId, w => w.WriterId, (b, w)
         //         => new { WriterName = w.FullName, BookTitle = b.Title });
 
+        if (books.Count() == 0)
+            return false;
+
         foreach (var book in books)
         {
             dataContext.Remove(book);

@@ -29,7 +29,11 @@ public class BooksController : ControllerBase
         if (validResult.IsValid)
         {
             var result = await _service.AddBook(bookCl);
-            return Ok(result);
+
+            if (result)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
         else
         {
@@ -48,14 +52,22 @@ public class BooksController : ControllerBase
     public async Task<IActionResult> DeleteBook(int id)
     {
         var result = await _service.DeleteBook(id);
-        return Ok(result);
+
+        if (result)
+            return Ok(result);
+        else
+            return BadRequest(result);
     }
 
     [HttpDelete("{id:int:min(1)}")]
     public async Task<IActionResult> DeleteBooksByWriter(int id)
     {
         var result = await _service.DeleteBooksByWriter(id);
-        return Ok(result);
+
+        if (result)
+            return Ok(result);
+        else
+            return BadRequest(result);
     }
 
     [HttpPost]
@@ -65,7 +77,11 @@ public class BooksController : ControllerBase
         if (validResult.IsValid)
         {
             bool result = await _service.UpdateBook(book);
-            return Ok(result);
+
+            if (result)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
         else
         {

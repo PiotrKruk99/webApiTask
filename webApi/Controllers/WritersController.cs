@@ -29,7 +29,11 @@ public class WritersController : ControllerBase
         if (validResult.IsValid)
         {
             var result = await _service.AddWriter(writerCl);
-            return Ok(result);
+
+            if (result)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
         else
         {
@@ -41,14 +45,22 @@ public class WritersController : ControllerBase
     public async Task<IActionResult> DeleteWriter(int id)
     {
         var result = await _service.DeleteWriter(id);
-        return Ok(result);
+
+        if (result)
+            return Ok(result);
+        else
+            return BadRequest(result);
     }
 
     [HttpGet("{id:int:min(1)}")]
     public async Task<IActionResult> GetWriterById(int id)
     {
         var result = await _service.GetWriters(id);
-        return Ok(result);
+
+        if (result is not null)
+            return Ok(result);
+        else
+            return BadRequest(result);
     }
 
     [HttpGet("{name:minlength(1)}")]
@@ -72,7 +84,11 @@ public class WritersController : ControllerBase
         if (validResult.IsValid)
         {
             bool result = await _service.UpdateWriter(writer);
-            return Ok(result);
+
+            if (result)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
         else
         {
