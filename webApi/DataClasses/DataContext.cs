@@ -20,7 +20,8 @@ public class DataContext : DbContext
         if ((optionsForTests is null) && !Directory.Exists(Path.GetDirectoryName(DbPath)))
             throw new Exception("'Data' folder for database file not exists.");
 
-        this.Database.Migrate();
+        if (optionsForTests is null)
+            this.Database.Migrate();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
