@@ -44,14 +44,14 @@ public class BooksController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{id:int:min(1)}")]
+    [HttpDelete("{id:int:min(1)}")]
     public async Task<IActionResult> DeleteBook(int id)
     {
         var result = await _service.DeleteBook(id);
         return Ok(result);
     }
 
-    [HttpGet("{id:int:min(1)}")]
+    [HttpDelete("{id:int:min(1)}")]
     public async Task<IActionResult> DeleteBooksByWriter(int id)
     {
         var result = await _service.DeleteBooksByWriter(id);

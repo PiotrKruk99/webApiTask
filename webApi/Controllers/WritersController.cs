@@ -37,7 +37,7 @@ public class WritersController : ControllerBase
         }
     }
 
-    [HttpGet("{id:int:min(1)}")]
+    [HttpDelete("{id:int:min(1)}")]
     public async Task<IActionResult> DeleteWriter(int id)
     {
         var result = await _service.DeleteWriter(id);
