@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using webApi.Services;
 using webApi.DataClasses.Entities;
-using webApi.DataClasses.Validators;
 using FluentValidation.Results;
 using FluentValidation;
 
