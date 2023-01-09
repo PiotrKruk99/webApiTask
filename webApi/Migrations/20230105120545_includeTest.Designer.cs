@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using webApi.DataClasses;
 
@@ -10,9 +11,10 @@ using webApi.DataClasses;
 namespace webApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230105120545_includeTest")]
+    partial class includeTest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.11");
@@ -63,7 +65,7 @@ namespace webApi.Migrations
 
                     b.HasIndex("EntityTwoId");
 
-                    b.ToTable("EntityOnes");
+                    b.ToTable("TestEntityOnes");
                 });
 
             modelBuilder.Entity("webApi.DataClasses.Entities.TestEntityTwo", b =>

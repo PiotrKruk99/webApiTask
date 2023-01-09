@@ -8,6 +8,7 @@ public class DataContext : DbContext
 {
     public DbSet<Writer> Writers { get; set; }
     public DbSet<Book> Books { get; set; }
+    public DbSet<TestEntityOne> EntityOnes { get; set; }
 
     public string DbPath { get; }
 
