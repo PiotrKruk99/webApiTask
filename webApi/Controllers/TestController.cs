@@ -8,9 +8,9 @@ namespace webApi.Controllers
     [Route("[controller]/[action]")]
     public class TestController : Controller
     {
-        private TestEntityService _service;
+        private ITestEntityService _service;
 
-        public TestController(TestEntityService service)
+        public TestController(ITestEntityService service)
         {
             _service = service;
         }
@@ -33,6 +33,27 @@ namespace webApi.Controllers
         public async Task<IActionResult> GetAllEntities()
         {
             var result = await _service.GetTestEntities();
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AllowedMethodsTest([FromBody] int id)
+        {
+            var result = await _service.AllowedMethodsTest(id);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MethodInMethod()
+        {
+            var result = await _service.MethodInMethod();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MethodsManyTimes()
+        {
+            var result = await _service.MethodsManyTimes();
             return Ok(result);
         }
     }
