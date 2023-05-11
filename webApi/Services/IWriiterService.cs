@@ -2,7 +2,7 @@ using webApi.DataClasses.Entities;
 
 namespace webApi.Services;
 
-public interface IWritersService
+public interface IWritersService : IService
 {
     Task<bool> AddWriter(WriterCl writerCl);
     Task<bool> DeleteWriter(int id);

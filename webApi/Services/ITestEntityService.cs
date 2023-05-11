@@ -2,7 +2,7 @@
 
 namespace webApi.Services
 {
-    public interface ITestEntityService
+    public interface ITestEntityService : IService
     {
         Task AddTestEtity(TestEntityOne entity);
         Task<int> AllowedMethodsTest(int id);

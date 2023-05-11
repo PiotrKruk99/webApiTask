@@ -12,9 +12,9 @@ public static class CustomExtensions
     {
         services.AddSwaggerGen();
         services.AddDbContext<DataContext>();
-        services.AddTransient<IWritersService, WritersService>();
-        services.AddTransient<IBooksService, BooksService>();
-        services.AddTransient<ITestEntityService, TestEntityService>();
+        //services.AddTransient<IWritersService, WritersService>();
+        //services.AddTransient<IBooksService, BooksService>();
+        //services.AddTransient<ITestEntityService, TestEntityService>();
         services.AddSingleton<IValidator<WriterCl>, WriterClValidator>();
         services.AddSingleton<IValidator<Writer>, WriterValidator>();
         services.AddSingleton<IValidator<BookCl>, BookClValidator>();

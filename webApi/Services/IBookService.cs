@@ -2,7 +2,7 @@ using webApi.DataClasses.Entities;
 
 namespace webApi.Services;
 
-public interface IBooksService
+public interface IBooksService : IService
 {
     Task<bool> AddBook(BookCl bookCl);
     Book[] GetBooks();
