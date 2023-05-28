@@ -6,9 +6,10 @@ namespace webApi.DataClasses;
 
 public class DataContext : DbContext
 {
-    public DbSet<Writer> Writers { get; set; }
-    public DbSet<Book> Books { get; set; }
-    public DbSet<TestEntityOne> EntityOnes { get; set; }
+    public DbSet<Writer> Writers { get; set; } = null!;
+    public DbSet<Book> Books { get; set; } = null!;
+    public DbSet<TestEntityOne> EntityOnes { get; set; } = null!;
+    public DbSet<TestEntityThree> TestAutoEntities { get; set; } = null!;
 
     public string DbPath { get; }
 

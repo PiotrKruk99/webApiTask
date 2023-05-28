@@ -9,12 +9,11 @@ namespace webApi.Services
         private DataContext _context;
         private Lazy<ITestEntityService> _testEntity;
         private static int counter = 0;
-        private static List<string> result;
+        private static List<string> result = new List<string>();
         public TestEntityService(DataContext context, IServiceProvider serviceProvider)
         {
             _context = context;
             _testEntity = new Lazy<ITestEntityService>(() => serviceProvider.GetService<ITestEntityService>());
-            result = new List<string>();
         }
 
         public async Task AddTestEtity(TestEntityOne entity)
