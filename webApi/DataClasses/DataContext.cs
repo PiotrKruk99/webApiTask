@@ -11,13 +11,11 @@ public class DataContext : DbContext
     public DbSet<TestEntityOne> EntityOnes { get; set; } = null!;
     public DbSet<TestEntityThree> TestAutoEntities { get; set; } = null!;
 
-    public string DbPath { get; }
+    public static readonly string DbPath = @"Data/base.db";
 
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
         var optionsForTests = options.FindExtension<InMemoryOptionsExtension>();
-
-        DbPath = @"Data/base.db";
 
         if ((optionsForTests is null) && !Directory.Exists(Path.GetDirectoryName(DbPath)))
             throw new Exception("'Data' folder for database file not exists.");
