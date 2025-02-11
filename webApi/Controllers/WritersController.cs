@@ -10,9 +10,9 @@ namespace webApi.Controllers;
 [Route("[controller]/[action]")]
 public class WritersController : ControllerBase
 {
-    private IWritersService _service;
-    private IValidator<WriterCl> _clValidator;
-    private IValidator<Writer> _validator;
+    private readonly IWritersService _service;
+    private readonly IValidator<WriterCl> _clValidator;
+    private readonly IValidator<Writer> _validator;
 
     public WritersController(IWritersService service, IValidator<WriterCl> clValidator, IValidator<Writer> validator)
     {

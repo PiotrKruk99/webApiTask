@@ -1,20 +1,20 @@
-using Xunit;
+using System;
+using System.Collections.Generic;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using webApi.DataClasses;
 using webApi.DataClasses.Entities;
 using webApi.Services;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+using Xunit;
 
-namespace webApi.Test;
+namespace webApi.Test.Tests;
 
 public class WritersServiceTests
 {
-    private DataContext context;
-    private IWritersService writersService;
-    private Mock<IBooksService> booksService;
+    private readonly DataContext _context;
+    private readonly IWritersService _writersService;
+    private readonly Mock<IBooksService> _booksService;
 
     private static IEnumerable<object[]> Writers()
     {
@@ -46,17 +46,17 @@ public class WritersServiceTests
         var options = new DbContextOptionsBuilder<DataContext>()
                   .UseInMemoryDatabase(Guid.NewGuid().ToString())
                   .Options;
-        context = new DataContext(options);
+        _context = new DataContext(options);
 
-        booksService = new Mock<IBooksService>();
-        writersService = new WritersService(booksService.Object, context);
+        _booksService = new Mock<IBooksService>();
+        _writersService = new WritersService(_booksService.Object, _context);
     }
 
     [Theory]
     [MemberData(nameof(Writers))]
     public async void AddWriter_Should_Returns_True(WriterCl writer)
     {
-        var result = await writersService.AddWriter(writer);
+        var result = await _writersService.AddWriter(writer);
 
         result.Should().BeTrue();
     }
@@ -66,10 +66,10 @@ public class WritersServiceTests
     {
         foreach (var writer in Writers())
         {
-            writersService.AddWriter((writer[0] as WriterCl)!);
+            _writersService.AddWriter((writer[0] as WriterCl)!);
         }
 
-        var result = writersService.GetWriters();
+        var result = _writersService.GetWriters();
 
         result.Should().NotBeNull();
         result!.Length.Should().Be(3);

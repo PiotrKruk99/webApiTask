@@ -6,40 +6,40 @@ namespace webApi.Services;
 
 public class BooksService : IBooksService
 {
-    private DataContext dataContext;
-    private Mapper mapper;
+    private readonly DataContext _dataContext;
+    private readonly Mapper _mapper;
 
     public BooksService(DataContext context)
     {
-        dataContext = context;
+        _dataContext = context;
 
         var config = new MapperConfiguration(cfg =>
                     cfg.CreateMap<BookCl, Book>()
                 );
-        mapper = new Mapper(config);
+        _mapper = new Mapper(config);
     }
 
     private bool IsTitleExists(string title)
     {
-        return dataContext.Books.ToList().Exists(b => b.Title.ToUpper().Equals(title.ToUpper()));
+        return _dataContext.Books.ToList().Exists(b => b.Title.ToUpper().Equals(title.ToUpper()));
     }
 
     public async Task<bool> AddBook(BookCl bookCl)
     {
-        Book book = mapper.Map<Book>(bookCl);
+        Book book = _mapper.Map<Book>(bookCl);
 
         if (IsTitleExists(book.Title))
             return false;
 
-        var writer = dataContext.Writers.FirstOrDefault(w => w.WriterId == book.WriterId);
+        var writer = _dataContext.Writers.FirstOrDefault(w => w.WriterId == book.WriterId);
         if (writer is null)
             return false;
 
-        dataContext.Books.Add(book);
+        _dataContext.Books.Add(book);
 
         try
         {
-            var result = await dataContext.SaveChangesAsync();
+            var result = await _dataContext.SaveChangesAsync();
             return result == 0 ? false : true;
         }
         catch (Exception exc)
@@ -51,21 +51,21 @@ public class BooksService : IBooksService
 
     public Book[] GetBooks()
     {
-        Book[] books = dataContext.Books.ToArray();
+        Book[] books = _dataContext.Books.ToArray();
         return books;
     }
 
     public async Task<bool> DeleteBook(int id)
     {
-        var book = dataContext.Books.Find(id);
+        var book = await _dataContext.Books.FindAsync(id);
 
         if (book == null)
             return false;
 
         try
         {
-            dataContext.Remove(book);
-            await dataContext.SaveChangesAsync();
+            _dataContext.Remove(book);
+            await _dataContext.SaveChangesAsync();
         }
         catch (Exception exc)
         {
@@ -78,21 +78,21 @@ public class BooksService : IBooksService
 
     public async Task<bool> DeleteBooksByWriter(int id)
     {
-        IEnumerable<Book> books = dataContext.Books.ToList().Where(x => x.WriterId == id);
+        IEnumerable<Book> books = _dataContext.Books.Where(x => x.WriterId == id);
         // var query = dataContext.Books.Join(dataContext.Writers, b => b.WriterId, w => w.WriterId, (b, w)
         //         => new { WriterName = w.FullName, BookTitle = b.Title });
 
-        if (books.Count() == 0)
+        if (!books.Any())
             return false;
 
         foreach (var book in books)
         {
-            dataContext.Remove(book);
+            _dataContext.Remove(book);
         }
 
         try
         {
-            await dataContext.SaveChangesAsync();
+            await _dataContext.SaveChangesAsync();
         }
         catch (Exception exc)
         {
@@ -107,8 +107,8 @@ public class BooksService : IBooksService
     {
         try
         {
-            dataContext.Books.Update(book);
-            await dataContext.SaveChangesAsync();
+            _dataContext.Books.Update(book);
+            await _dataContext.SaveChangesAsync();
         }
         catch (Exception exc)
         {

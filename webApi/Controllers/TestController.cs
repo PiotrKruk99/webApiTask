@@ -8,7 +8,7 @@ namespace webApi.Controllers
     [Route("[controller]/[action]")]
     public class TestController : Controller
     {
-        private ITestEntityService _service;
+        private readonly ITestEntityService _service;
 
         public TestController(ITestEntityService service)
         {

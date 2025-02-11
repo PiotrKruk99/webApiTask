@@ -1,19 +1,19 @@
-using Xunit;
+using System;
 using FluentAssertions;
 using FluentValidation.Results;
-using webApi.DataClasses.Validators;
 using webApi.DataClasses.Entities;
-using System;
+using webApi.DataClasses.Validators;
+using Xunit;
 
-namespace webApi.Test;
+namespace webApi.Test.Tests;
 
 public class WriterClValidatorTests
 {
-    private WriterClValidator validator;
+    private readonly WriterClValidator _validator;
 
     public WriterClValidatorTests()
     {
-        validator = new WriterClValidator();
+        _validator = new WriterClValidator();
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class WriterClValidatorTests
             DateOfBirth = new DateTime(1977, 3, 1)
         };
 
-        ValidationResult result = validator.Validate(writer);
+        ValidationResult result = _validator.Validate(writer);
 
         result.IsValid.Should().BeTrue();
     }
@@ -41,7 +41,7 @@ public class WriterClValidatorTests
             DateOfBirth = new DateTime(1977, 3, 1)
         };
 
-        ValidationResult result = validator.Validate(writer);
+        ValidationResult result = _validator.Validate(writer);
 
         result.IsValid.Should().BeFalse();
         result.Errors.Count.Should().BeGreaterThan(0);

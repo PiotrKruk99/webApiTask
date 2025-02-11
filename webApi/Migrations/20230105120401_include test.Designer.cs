@@ -12,7 +12,7 @@ namespace webApi.Migrations
 {
     [DbContext(typeof(DataContext))]
     [Migration("20230105120401_include test")]
-    partial class includetest
+    partial class IncludeTest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

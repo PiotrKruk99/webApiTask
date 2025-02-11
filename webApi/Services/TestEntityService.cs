@@ -6,10 +6,10 @@ namespace webApi.Services
 {
     public class TestEntityService : ITestEntityService
     {
-        private DataContext _context;
-        private Lazy<ITestEntityService> _testEntity;
-        private static int counter = 0;
-        private static List<string> result = new List<string>();
+        private readonly DataContext _context;
+        private readonly Lazy<ITestEntityService> _testEntity;
+        private static int _counter;
+        private static readonly List<string> _result = new List<string>();
         public TestEntityService(DataContext context, IServiceProvider serviceProvider)
         {
             _context = context;
@@ -36,9 +36,9 @@ namespace webApi.Services
                                             .ToListAsync();
         }
 
-        private List<int> testIds = new List<int>() { 1, 3 };
+        private List<int> _testIds = new List<int>() { 1, 3 };
 
-        private static Func<DataContext, int, Task<int>> allowedMethodsTest =
+        private static readonly Func<DataContext, int, Task<int>> _allowedMethodsTest =
             EF.CompileAsyncQuery(
                 (DataContext context, int id) => context.EntityOnes
                                                 .AsNoTracking()
@@ -48,7 +48,7 @@ namespace webApi.Services
 
         public async Task<int> AllowedMethodsTest(int id)
         {
-            return await allowedMethodsTest(_context, id);
+            return await _allowedMethodsTest(_context, id);
         }
 
         public async Task<List<TestEntityOne>> MethodInMethod()
@@ -58,17 +58,17 @@ namespace webApi.Services
 
         public async Task<int> MethodsManyTimes()
         {
-            if (counter < 5)
+            if (_counter < 5)
             {
                 var list = await _testEntity.Value.GetTestEntities();
-                result.Add(list[1].Value1);
-                counter++;
+                _result.Add(list[1].Value1);
+                _counter++;
                 await _testEntity.Value.MethodsManyTimes();
-                return counter;
+                return _counter;
             }
             else
             {
-                return counter;
+                return _counter;
             }
         }
     }

@@ -4,7 +4,7 @@
 
 namespace webApi.Migrations
 {
-    public partial class includetest : Migration
+    public partial class IncludeTest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

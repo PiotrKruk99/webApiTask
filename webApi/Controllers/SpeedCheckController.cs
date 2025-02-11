@@ -7,7 +7,7 @@ namespace webApi.Controllers;
 [Route("[controller]/[action]")]
 public class SpeedCheckController : Controller
 {
-    private ISpeedCheckService _service;
+    private readonly ISpeedCheckService _service;
 
     public SpeedCheckController(ISpeedCheckService service)
     {

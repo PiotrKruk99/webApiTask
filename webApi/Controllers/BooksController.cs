@@ -10,9 +10,9 @@ namespace webApi.Controllers;
 [Route("[controller]/[action]")]
 public class BooksController : ControllerBase
 {
-    private IBooksService _service;
-    private IValidator<BookCl> _clValidator;
-    private IValidator<Book> _validator;
+    private readonly IBooksService _service;
+    private readonly IValidator<BookCl> _clValidator;
+    private readonly IValidator<Book> _validator;
 
     public BooksController(IBooksService service, IValidator<BookCl> clValidator, IValidator<Book> validator)
     {
